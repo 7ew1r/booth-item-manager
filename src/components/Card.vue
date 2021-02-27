@@ -1,8 +1,8 @@
 <template>
-    <v-card
+  <v-card
     :loading="loading"
-    class="my-12"
-    max-width="374"
+    class="mx-6 my-12"
+    max-width="300"
   >
     <template slot="progress">
       <v-progress-linear
@@ -13,11 +13,12 @@
     </template>
 
     <v-img
-      height="250"
-      src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
+      height="300"
+      width="300"
+      src="@/assets/954376.jpg"
     ></v-img>
 
-    <v-card-title>{{ title }}</v-card-title>
+    <v-card-title>{{ item.name }}</v-card-title>
 
     <!-- <v-card-text>
       <v-row
@@ -77,11 +78,22 @@
   </v-card>
 </template>
 
-<script>
-  export default {
+<script lang="ts">
+interface Item {
+  id: number;
+  itemNumber: number;
+  name: string;
+}
+
+
+
+import Vue from 'vue';
+
+  export default Vue.extend({
     data: () => ({
       loading: false,
       selection: 1,
+      item: {id: 1, itemNumber: 954376, name: "オリジナル3Dモデル『キッシュ』"}
     }),
 
     props: {
@@ -95,5 +107,5 @@
         setTimeout(() => (this.loading = false), 2000)
       },
     },
-  }
+  });
 </script>

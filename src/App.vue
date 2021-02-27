@@ -1,24 +1,23 @@
 <template>
   <div id="app">
-    <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
-    <!-- <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/> -->
-    <v-container>
-      <v-row v-for="item in [1,2,3,4,5]" :key="item">
-        <Card title="商品1"/>
+    <v-app>
+    <v-container fluid>
+      <!-- <v-col> -->
+      <v-row>
+        <Card v-for="item in [1,2,3,4,5]" :key="item" title="商品1"/>
       </v-row>
     </v-container>
+    </v-app>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-//import HelloWorld from './components/HelloWorld.vue';
 import Card from './components/Card.vue';
 
 export default Vue.extend({
   name: 'App',
   components: {
-    //HelloWorld
     Card
   }
 });
