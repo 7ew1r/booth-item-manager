@@ -1,7 +1,7 @@
 <template>
     <v-card
     :loading="loading"
-    class="mx-auto my-12"
+    class="my-12"
     max-width="374"
   >
     <template slot="progress">
@@ -17,7 +17,7 @@
       src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
     ></v-img>
 
-    <v-card-title>商品1</v-card-title>
+    <v-card-title>{{ title }}</v-card-title>
 
     <!-- <v-card-text>
       <v-row
@@ -83,6 +83,10 @@
       loading: false,
       selection: 1,
     }),
+
+    props: {
+        title: String,
+    },
 
     methods: {
       reserve () {

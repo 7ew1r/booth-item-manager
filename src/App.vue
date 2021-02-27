@@ -38,22 +38,23 @@
     </v-app-bar>
 
     <v-main>
-      <!-- <HelloWorld/> -->
-      <Top/>
+      <v-row>
+        <Card v-for="item in [1,2,3,4,5,6,7,8,9,10]" :key="item" title="商品1"/>
+      </v-row>
     </v-main>
   </v-app>
 </template>
 
 <script>
 //import HelloWorld from './components/HelloWorld';
-import Top from './components/Top.vue';
+import Card from './components/Card.vue';
 
 export default {
   name: 'App',
 
   components: {
    // HelloWorld,
-    Top
+    Card
   },
 
   data: () => ({
