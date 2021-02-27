@@ -20,6 +20,9 @@
       <v-row>
         <Card v-for="item in items" :key="item.id" :item="item" />
       </v-row>
+      <v-btn @click="showData"
+  elevation="2"
+>DB読み込み</v-btn>
     </v-container>
     </v-app>
   </div>
@@ -28,6 +31,28 @@
 <script lang="ts">
 import Vue from 'vue';
 import Card from './components/Card.vue';
+
+var Datastore = require('nedb');
+var db = new Datastore();
+
+var doc = {
+    name: "hoge",
+    age: 20
+};
+
+db.insert(doc, function(err: any) {
+    var result = db.find({}, (err: any, docs: any) => {
+        console.dir(docs);
+    });
+    console.log(result);
+});
+
+// //インメモリでDB作成
+// var Database = require("nedb");
+// var namelistDB = new Database();
+// //データ読み込み挿入
+// import dbData from './db/namelist.json';
+// namelistDB.insert(dbData);
 
 export default Vue.extend({
   data: () => ({
@@ -41,6 +66,15 @@ export default Vue.extend({
   name: 'App',
   components: {
     Card
+  },
+  methods: {
+    showData() {
+      // namelistDB.loadDatabase();
+      // namelistDB.findOne({}, function(err, doc){
+    // console.log(doc);
+// });
+      
+    }
   }
 });
 </script>

@@ -15,10 +15,12 @@
   "dependencies": {
     "@types/electron-devtools-installer": "^2.2.0",
     "core-js": "^3.6.5",
+    "nedb": "^1.8.0",
     "vue": "^2.6.11",
     "vuetify": "^2.4.0"
   },
   "devDependencies": {
+    "@types/nedb": "^1.8.11",
     "@typescript-eslint/eslint-plugin": "^2.33.0",
     "@typescript-eslint/parser": "^2.33.0",
     "@vue/cli-plugin-babel": "~4.5.0",
