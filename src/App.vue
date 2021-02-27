@@ -1,10 +1,24 @@
 <template>
   <div id="app">
     <v-app>
+      <v-app-bar app>
+<v-app-bar-nav-icon></v-app-bar-nav-icon>
+
+      <v-toolbar-title>Page title</v-toolbar-title>
+
+      <v-spacer></v-spacer>
+
+      <v-btn icon>
+        <v-icon>mdi-heart</v-icon>
+      </v-btn>
+
+      <v-btn icon>
+        <v-icon>mdi-magnify</v-icon>
+      </v-btn>
+  </v-app-bar>
     <v-container fluid>
-      <!-- <v-col> -->
       <v-row>
-        <Card v-for="item in [1,2,3,4,5]" :key="item" title="商品1"/>
+        <Card v-for="item in items" :key="item.id" :item="item" />
       </v-row>
     </v-container>
     </v-app>
@@ -16,6 +30,14 @@ import Vue from 'vue';
 import Card from './components/Card.vue';
 
 export default Vue.extend({
+  data: () => ({
+    items: [
+      {id: 1, itemNumber: 954376, name: "オリジナル3Dモデル『キッシュ』", tags: ["3Dモデル","VRChat"]},
+       {id: 2, itemNumber: 2495796, name: "オリジナル3Dモデル『レイニィ』ver.1.02"},
+        {id: 3, itemNumber: 954376, name: "オリジナル3Dモデル『キッシュ』"},
+    ]
+  }),
+
   name: 'App',
   components: {
     Card

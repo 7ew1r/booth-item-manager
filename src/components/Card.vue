@@ -1,7 +1,7 @@
 <template>
   <v-card
     :loading="loading"
-    class="mx-6 my-12"
+    class="mx-3 my-12"
     max-width="300"
   >
     <template slot="progress">
@@ -56,13 +56,7 @@
         active-class="deep-purple accent-4 white--text"
         column
       >
-        <v-chip>タグ1</v-chip>
-
-        <v-chip>タグ2</v-chip>
-
-        <v-chip>タグ3</v-chip>
-
-        <v-chip>タグ4</v-chip>
+        <v-chip v-for="tag in item.tags" :key="tag">{{ tag }}</v-chip>
       </v-chip-group>
     </v-card-text>
 
@@ -79,10 +73,11 @@
 </template>
 
 <script lang="ts">
-interface Item {
+export interface Item {
   id: number;
   itemNumber: number;
   name: string;
+  tags: string[];
 }
 
 
@@ -93,10 +88,12 @@ import Vue from 'vue';
     data: () => ({
       loading: false,
       selection: 1,
-      item: {id: 1, itemNumber: 954376, name: "オリジナル3Dモデル『キッシュ』"}
-    }),
+          }),
 
     props: {
+        item: {
+          type: Object as () => Item
+        },
         title: String,
     },
 
