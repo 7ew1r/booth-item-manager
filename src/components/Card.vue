@@ -1,9 +1,5 @@
 <template>
-  <v-card
-    :loading="loading"
-    class="mx-3 my-12"
-    max-width="300"
-  >
+  <v-card :loading="loading" class="mx-2 my-5" max-width="300">
     <template slot="progress">
       <v-progress-linear
         color="deep-purple"
@@ -12,43 +8,9 @@
       ></v-progress-linear>
     </template>
 
-    <v-img
-      height="300"
-      width="300"
-      src="@/assets/954376.jpg"
-    ></v-img>
+    <v-img height="300" width="300" :src="item.imageFile"></v-img>
 
     <v-card-title>{{ item.name }}</v-card-title>
-
-    <!-- <v-card-text>
-      <v-row
-        align="center"
-        class="mx-0"
-      >
-        <v-rating
-          :value="4.5"
-          color="amber"
-          dense
-          half-increments
-          readonly
-          size="14"
-        ></v-rating>
-
-        <div class="grey--text ml-4">
-          4.5 (413)
-        </div>
-      </v-row>
-
-      <div class="my-4 subtitle-1">
-        $ • Italian, Cafe
-      </div>
-
-      <div>Small plates, salads & sandwiches - an intimate setting with 12 indoor seats plus patio seating.</div>
-    </v-card-text> -->
-
-    <!-- <v-divider class="mx-4"></v-divider>
-
-    <v-card-title>Tonight's availability</v-card-title> -->
 
     <v-card-text>
       <v-chip-group
@@ -61,13 +23,14 @@
     </v-card-text>
 
     <v-card-actions>
-      <v-btn
-        color="deep-purple lighten-2"
-        text
-        @click="reserve"
-      >
+      <v-btn color="deep-purple lighten-2" text @click="reserve">
         編集
       </v-btn>
+      <v-spacer></v-spacer>
+      <v-btn icon @click="openExploer"><v-icon>mdi-folder-open</v-icon></v-btn>
+      <v-btn icon @click="openWebBrowser"
+        ><v-icon>mdi-share-variant</v-icon></v-btn
+      >
     </v-card-actions>
   </v-card>
 </template>
@@ -80,29 +43,42 @@ export interface Item {
   tags: string[];
 }
 
+import Vue from "vue";
+import BoothItem from "../models/BoothItem";
 
+export default Vue.extend({
+  data: () => ({
+    loading: false,
+    selection: 1,
+    transparent: "rgba(255, 255, 255, 0)",
+  }),
 
-import Vue from 'vue';
-
-  export default Vue.extend({
-    data: () => ({
-      loading: false,
-      selection: 1,
-          }),
-
-    props: {
-        item: {
-          type: Object as () => Item
-        },
-        title: String,
+  props: {
+    item: {
+      type: Object as () => BoothItem,
     },
+  },
 
-    methods: {
-      reserve () {
-        this.loading = true
+  methods: {
+    reserve() {
+      this.loading = true;
 
-        setTimeout(() => (this.loading = false), 2000)
-      },
+      setTimeout(() => (this.loading = false), 2000);
     },
-  });
+    openExploer() {
+      const { shell } = require("electron");
+      shell.openPath("C:");
+    },
+    openWebBrowser() {
+      const { shell } = require("electron");
+      shell.openExternal(this.item.url);
+    },
+  },
+});
 </script>
+
+<style lang="scss" scoped>
+.show-btns {
+  color: rgba(0, 0, 0, 1) !important;
+}
+</style>
