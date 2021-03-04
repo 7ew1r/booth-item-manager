@@ -26,8 +26,6 @@
             <Card v-for="item in itemSortedById" :key="item.id" :item="item" />
           </v-row>
           <AddItemButton />
-          <!-- <AddItemDialog /> -->
-          <!-- <v-btn @click="showData" elevation="2">DB読み込み</v-btn> -->
         </v-container>
       </v-main>
     </v-app>
@@ -40,10 +38,16 @@ import SearchTextField from "./components/SearchTextField.vue";
 import Card, { Item } from "./components/Card.vue";
 import AddItemButton from "./components/AddItemButton.vue";
 import AddItemDialog from "./components/AddItemDialog.vue";
+
+import DB from "./db/db";
 import BoothItem from "./models/BoothItem";
 
-var Datastore = require("nedb");
-var db = new Datastore();
+//const Datastore = require("nedb");
+//const db = new Datastore();
+//Vue.prototype.$db = new Datastore();
+
+const Datastore = require("nedb");
+DB.db = new Datastore();
 
 let docs: Array<Item> = [
   {
@@ -67,7 +71,7 @@ let docs: Array<Item> = [
 ];
 
 docs.forEach((doc) =>
-  db.insert(doc, function(err: any) {
+  DB.db.insert(doc, function(err: any) {
     if (err !== null) {
       console.error(err);
     }
@@ -87,7 +91,7 @@ export default Vue.extend({
     // AddItemDialog,
   },
   created: function() {
-    db.find({}, (err: any, docs: Array<Item>) => {
+    DB.db.find({}, (err: any, docs: Array<Item>) => {
       if (err !== null) {
         console.error(err);
       }
@@ -110,7 +114,7 @@ export default Vue.extend({
   },
   methods: {
     showData(): Array<Object> {
-      return db.find({}, (err: any, docs: any) => {
+      return DB.db.find({}, (err: any, docs: any) => {
         if (err !== null) {
           console.error(err);
         }
