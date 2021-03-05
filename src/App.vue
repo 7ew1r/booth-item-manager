@@ -34,56 +34,57 @@
 
 <script lang="ts">
 import Vue from "vue";
+// import Vuex from "vuex";
+
 import SearchTextField from "./components/SearchTextField.vue";
 import Card, { Item } from "./components/Card.vue";
 import AddItemButton from "./components/AddItemButton.vue";
-import AddItemDialog from "./components/AddItemDialog.vue";
+// import AddItemDialog from "./components/AddItemDialog.vue";
+
+// const store = require("./store/index.js");
 
 import DB from "./db/db";
 import BoothItem from "./models/BoothItem";
 
-//const Datastore = require("nedb");
-//const db = new Datastore();
-//Vue.prototype.$db = new Datastore();
+// const Datastore = require("nedb");
+// DB.db = new Datastore();
 
-const Datastore = require("nedb");
-DB.db = new Datastore();
+// let docs: Array<Item> = [
+//   {
+//     id: 1,
+//     itemNumber: 954376,
+//     name: "オリジナル3Dモデル『キッシュ』",
+//     tags: ["3Dモデル", "VRChat"],
+//   },
+//   {
+//     id: 2,
+//     itemNumber: 2495796,
+//     name: "オリジナル3Dモデル『レイニィ』ver.1.02",
+//     tags: [],
+//   },
+//   {
+//     id: 3,
+//     itemNumber: 2645754,
+//     name: "オリジナル3Dモデル 「ぷれっつぇる」",
+//     tags: [],
+//   },
+// ];
 
-let docs: Array<Item> = [
-  {
-    id: 1,
-    itemNumber: 954376,
-    name: "オリジナル3Dモデル『キッシュ』",
-    tags: ["3Dモデル", "VRChat"],
-  },
-  {
-    id: 2,
-    itemNumber: 2495796,
-    name: "オリジナル3Dモデル『レイニィ』ver.1.02",
-    tags: [],
-  },
-  {
-    id: 3,
-    itemNumber: 2645754,
-    name: "オリジナル3Dモデル 　「ぷれっつぇる」",
-    tags: [],
-  },
-];
-
-docs.forEach((doc) =>
-  DB.db.insert(doc, function(err: any) {
-    if (err !== null) {
-      console.error(err);
-    }
-  })
-);
+// docs.forEach((doc) =>
+//   DB.db.insert(doc, function(err: any) {
+//     if (err !== null) {
+//       console.error(err);
+//     }
+//   })
+// );
 
 export default Vue.extend({
   data: () => ({
-    items: [] as Array<BoothItem>,
+    //items: [] as Array<BoothItem>,
   }),
 
   name: "App",
+  // store,
   components: {
     Card,
     SearchTextField,
@@ -91,38 +92,37 @@ export default Vue.extend({
     // AddItemDialog,
   },
   created: function() {
-    DB.db.find({}, (err: any, docs: Array<Item>) => {
-      if (err !== null) {
-        console.error(err);
-      }
-
-      console.log(docs);
-
-      this.items = docs.map(
-        (doc: Item) => new BoothItem(doc.id, doc.itemNumber, doc.name, doc.tags)
-      );
-    });
+    // DB.db.find({}, (err: any, docs: Array<Item>) => {
+    //   if (err !== null) {
+    //     console.error(err);
+    //   }
+    //   console.log(docs);
+    //   this.items = docs.map(
+    //     (doc: Item) => new BoothItem(doc.id, doc.itemNumber, doc.name, doc.tags)
+    //   );
+    // });
   },
   computed: {
     itemSortedById: function() {
-      return Array.from(this.items).sort((a: BoothItem, b: BoothItem) => {
-        if (a.id < b.id) return -1;
-        if (a.id > b.id) return 1;
-        return 0;
-      });
+      return Array.from(this.$store.state.items as Array<BoothItem>).sort(
+        (a: BoothItem, b: BoothItem) => {
+          if (a.id < b.id) return -1;
+          if (a.id > b.id) return 1;
+          return 0;
+        }
+      );
     },
   },
   methods: {
-    showData(): Array<Object> {
-      return DB.db.find({}, (err: any, docs: any) => {
-        if (err !== null) {
-          console.error(err);
-        }
-
-        console.log(docs);
-        return docs;
-      });
-    },
+    // showData(): Array<Object> {
+    // return DB.db.find({}, (err: any, docs: any) => {
+    //   if (err !== null) {
+    //     console.error(err);
+    //   }
+    //   console.log(docs);
+    //   return docs;
+    // });
+    // },
   },
 });
 </script>

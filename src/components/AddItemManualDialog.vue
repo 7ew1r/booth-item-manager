@@ -47,10 +47,18 @@
 </template>
 
 <script lang="ts">
+import BoothItem from "@/models/BoothItem";
 import Vue from "vue";
-import DB from "../db/db";
+// import Vuex from "vuex";
+
+// import DB from "../db/db";
+
+const store = require("@/store/index");
+
+// Vue.use(Vuex);
 
 export default Vue.extend({
+  store,
   data: () => ({
     title: "アイテムを追加（手動）",
     dialog: false,
@@ -68,20 +76,30 @@ export default Vue.extend({
 
   methods: {
     submit(): void {
-      let doc = {
-        id: 999,
-        itemNumber: this.itemNumber,
-        name: this.name,
-        tags: this.tags,
-      };
+      // let doc = {
+      //   id: 999,
+      //   itemNumber: this.itemNumber,
+      //   name: this.name,
+      //   tags: this.tags,
+      // };
 
-      DB.db.insert(doc, (err: any, docs: any) => {
-        if (err !== null) {
-          console.error(err);
-        }
+      let newItem = new BoothItem(
+        999,
+        parseInt(this.itemNumber),
+        this.name,
+        this.tags
+      );
 
-        console.log(docs);
-      });
+      this.$store.dispatch("addItem", newItem);
+
+      // DB.db.insert(doc, (err: any, docs: any) => {
+      //   if (err !== null) {
+      //     console.error(err);
+      //   }
+
+      //   console.log(docs);
+      // });
+      console.log(store.state.counter);
     },
   },
 });
