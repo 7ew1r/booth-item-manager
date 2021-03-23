@@ -78,6 +78,8 @@ import BoothItem from "./models/BoothItem";
 //   })
 // );
 
+import { ipcRenderer } from "electron";
+
 export default Vue.extend({
   data: () => ({
     //items: [] as Array<BoothItem>,
@@ -92,15 +94,11 @@ export default Vue.extend({
     // AddItemDialog,
   },
   created: function() {
-    // DB.db.find({}, (err: any, docs: Array<Item>) => {
-    //   if (err !== null) {
-    //     console.error(err);
-    //   }
-    //   console.log(docs);
-    //   this.items = docs.map(
-    //     (doc: Item) => new BoothItem(doc.id, doc.itemNumber, doc.name, doc.tags)
-    //   );
-    // });
+    const ayncFunc = async () => {
+      const data = await ipcRenderer.invoke("get-version", "ping");
+      console.log(data);
+    };
+    ayncFunc();
   },
   computed: {
     itemSortedById: function() {

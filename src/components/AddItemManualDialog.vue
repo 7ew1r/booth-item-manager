@@ -53,12 +53,10 @@ import Vue from "vue";
 
 // import DB from "../db/db";
 
-const store = require("@/store/index");
-
-// Vue.use(Vuex);
+//const store = require("@/store/index");
 
 export default Vue.extend({
-  store,
+  //store,
   data: () => ({
     title: "アイテムを追加（手動）",
     dialog: false,
@@ -85,6 +83,7 @@ export default Vue.extend({
 
       let newItem = new BoothItem(
         999,
+        //null,
         parseInt(this.itemNumber),
         this.name,
         this.tags
@@ -99,7 +98,7 @@ export default Vue.extend({
 
       //   console.log(docs);
       // });
-      console.log(store.state.counter);
+      //console.log(store.state.counter);
     },
   },
 });

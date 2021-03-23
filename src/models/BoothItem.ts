@@ -1,9 +1,9 @@
 export default class BoothItem {
   id: number;
-  number: number;
+  number: number | null;
   name: string;
   tags: string[];
-  url: string;
+  url: string | null;
   imageFile: any;
 
   constructor(id: number, number: number, name: string, tags: string[]) {
@@ -11,24 +11,13 @@ export default class BoothItem {
     this.number = number;
     this.name = name;
     this.tags = tags;
-    this.url = `https://booth.pm/ja/items/${number}`;
 
-    let imageFilePath = `../../assets/${number}.jpg`;
-
-    const fs = require("fs");
-
-    const electron = require("electron");
-    const app = electron.app;
-    console.log(electron);
-    console.log(app);
-    // console.log(app.getVersion());
-    // console.log(imageFilePath);
-    // console.log(fs.existsSync(imageFilePath));
-
-    if (fs.existsSync(imageFilePath)) {
+    if (!isNaN(number)) {
       this.imageFile = require(`@/assets/${number}.jpg`);
+      this.url = `https://booth.pm/ja/items/${number}`;
     } else {
-      this.imageFile = require(`@/assets/2495796.jpg`);
+      this.imageFile = require(`@/assets/no-image.png`);
+      this.url = null;
     }
   }
 }

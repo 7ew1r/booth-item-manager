@@ -8,8 +8,16 @@ export interface State {
   items: BoothItem[];
 }
 
+export interface Context {
+  commit: (name: string, body: any) => void;
+}
+
 export interface Mutations {
   [key: string]: (state: State, payload?: any) => void;
+}
+
+export interface Actions {
+  [key: string]: (context: Context, payload?: any) => void;
 }
 
 export const state: State = {
@@ -29,7 +37,14 @@ export const mutations: Mutations = {
   },
 };
 
+export const actions: Actions = {
+  addItem({ commit }, item) {
+    commit("addItem", item);
+  },
+};
+
 export default new Vuex.Store({
   state,
   mutations,
+  actions,
 });
