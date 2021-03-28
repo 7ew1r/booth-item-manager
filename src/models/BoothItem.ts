@@ -1,7 +1,6 @@
 import { ScrapedBoothItem } from "@/models/ScrapedBoothItems";
 
 export default class BoothItem implements ScrapedBoothItem {
-  //id: number;
   number: string | null;
   url: string | null;
   title: string;
@@ -16,7 +15,6 @@ export default class BoothItem implements ScrapedBoothItem {
   imageBase64: any;
 
   constructor(item: ScrapedBoothItem) {
-    //this.id
     this.url = item.url;
     this.number = item.number;
     this.title = item.title;
@@ -40,7 +38,7 @@ export default class BoothItem implements ScrapedBoothItem {
     }
   }
 
-  imageToBase64(filePath: string): string {
+  private imageToBase64(filePath: string): string {
     // TODO: 例外処理
     const fs = require("fs");
     let converted = fs.readFileSync(filePath, "base64", function(
@@ -51,10 +49,5 @@ export default class BoothItem implements ScrapedBoothItem {
       return data;
     });
     return `data:image/jpeg;base64,${converted}`;
-  }
-
-  writeFile() {
-    const fs = require("fs");
-    fs.writeFileSync("E:/Document/test.jpg", "aaaaa");
   }
 }

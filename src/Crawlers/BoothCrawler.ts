@@ -76,7 +76,7 @@ export default class BoothCrawler {
       }
 
       console.log(`画像URL: ${imageUrl}`);
-      const request = require("request");
+
       let fs = require("fs");
 
       const imageFileSavePath = `E:/Document/BoothItemManager/${number}.jpg`;
@@ -87,22 +87,34 @@ export default class BoothCrawler {
         );
       }
 
-      await request({ method: "GET", url: imageUrl, encoding: null }, function(
-        error: any,
-        response: any,
-        body: any
-      ) {
-        if (!error && response.statusCode === 200) {
-          fs.writeFileSync(imageFileSavePath, body, "binary");
-          console.log(
-            `画像ファイルのダウンロード成功 \n ファイルパス: ${imageFileSavePath}`
-          );
-        }
-      });
+      await this.downloadFile(imageUrl, imageFileSavePath);
     } catch (e) {
       console.log(e);
       //throw new Error("画像のダウンロードに失敗");
     }
+  }
+
+  private static downloadFile(url: string, path: string): Promise<any> {
+    let fs = require("fs");
+    const request = require("request");
+    return new Promise((resolve, reject) => {
+      request({ method: "GET", url: url, encoding: null }, function(
+        error: any,
+        response: any,
+        body: any
+      ) {
+        if (error) {
+          reject("失敗");
+        }
+        if (!error && response.statusCode === 200) {
+          fs.writeFileSync(path, body, "binary");
+          console.log(
+            `画像ファイルのダウンロード成功 \n ファイルパス: ${path}`
+          );
+          resolve("成功");
+        }
+      });
+    });
   }
 
   // 商品名を取得

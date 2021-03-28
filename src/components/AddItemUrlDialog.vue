@@ -77,32 +77,25 @@ export default Vue.extend({
           throw new Error("商品の取得に失敗");
         }
         crw.showItems();
+        if (
+          this.$store.state.items.some((e: BoothItem) => {
+            e.number === crw.scrapedBooothItem?.number;
+          })
+        ) {
+          throw new Error("そのアイテムは既に存在します");
+        }
+
         const newItem = new BoothItem(crw.scrapedBooothItem);
         this.$store.dispatch("addItem", newItem);
 
         this.dialog = false; // ダイアログを消す
       } catch (e) {
-        console.log(e);
-        console.log("商品の取得に失敗");
+        console.error(e);
+        console.error("商品の取得に失敗");
       } finally {
         this.overray = false;
       }
     },
-    // downloadImage(url: string) {
-    //   const request = require("request");
-    //   const fs = require("fs");
-
-    //   request({ method: "GET", url: url, encoding: null }, function(
-    //     error: any,
-    //     response: any,
-    //     body: any
-    //   ) {
-    //     if (!error && response.statusCode === 200) {
-    //       fs.writeFileSync("E:/Document/a.png", body, "binary");
-    //       console.log("aaa");
-    //     }
-    //   });
-    // },
   },
 });
 </script>

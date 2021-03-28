@@ -51,15 +51,27 @@ export const state: State = {
   ],
 };
 
+// TODO: remove が機能しているかチェックする
 export const mutations: Mutations = {
   addItem(state, item: BoothItem) {
     state.items.push(item);
+  },
+  removeItem(state, number: string) {
+    // TODO: エラー時の判定
+    state.items.splice(
+      state.items.findIndex((e) => {
+        e.number === number;
+      }, 1)
+    );
   },
 };
 
 export const actions: Actions = {
   addItem({ commit }, item) {
     commit("addItem", item);
+  },
+  removeItem({ commit }, number) {
+    commit("removeItem", number);
   },
 };
 

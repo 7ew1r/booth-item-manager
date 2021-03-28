@@ -7,5 +7,4 @@ export interface ScrapedBoothItem {
   description: string | null;
   modules: string[] | null;
   tags: string[] | null;
-  // 画像のURL
 }
