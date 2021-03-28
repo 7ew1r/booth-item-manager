@@ -10,74 +10,41 @@
       </template>
 
       <v-card>
+        <v-overlay :value="overray"
+          ><v-progress-circular indeterminate size="64"></v-progress-circular
+        ></v-overlay>
         <v-card-title>
-          <span class="headline">User Profile</span>
+          <span class="headline">URL から BOOTH アイテムを追加</span>
         </v-card-title>
         <v-card-text>
-          <v-container>
-            <v-row>
-              <v-col cols="12" sm="6" md="4">
-                <v-text-field label="Legal first name*" required></v-text-field>
-              </v-col>
-              <v-col cols="12" sm="6" md="4">
-                <v-text-field
-                  label="Legal middle name"
-                  hint="example of helper text only on focus"
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12" sm="6" md="4">
-                <v-text-field
-                  label="Legal last name*"
-                  hint="example of persistent helper text"
-                  persistent-hint
-                  required
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12">
-                <v-text-field label="Email*" required></v-text-field>
-              </v-col>
-              <v-col cols="12">
-                <v-text-field
-                  label="Password*"
-                  type="password"
-                  required
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12" sm="6">
-                <v-select
-                  :items="['0-17', '18-29', '30-54', '54+']"
-                  label="Age*"
-                  required
-                ></v-select>
-              </v-col>
-              <v-col cols="12" sm="6">
-                <v-autocomplete
-                  :items="[
-                    'Skiing',
-                    'Ice hockey',
-                    'Soccer',
-                    'Basketball',
-                    'Hockey',
-                    'Reading',
-                    'Writing',
-                    'Coding',
-                    'Basejump',
-                  ]"
-                  label="Interests"
-                  multiple
-                ></v-autocomplete>
-              </v-col>
-            </v-row>
-          </v-container>
-          <small>*indicates required field</small>
+          <v-form v-model="valid">
+            <v-container>
+              <v-row>
+                <v-col cols="12">
+                  <v-text-field
+                    v-model="url"
+                    label="URL*"
+                    placeholder="https://booth.pm/ja/items/xxxxxx"
+                    :rules="rule"
+                    required
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-form>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="blue darken-1" text @click="dialog = false">
-            Close
+            キャンセル
           </v-btn>
-          <v-btn color="blue darken-1" text @click="dialog = false">
-            Save
+          <v-btn
+            color="blue darken-1"
+            text
+            @click="scraping(url)"
+            :disabled="!valid"
+          >
+            実行
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -87,11 +54,55 @@
 
 <script lang="ts">
 import Vue from "vue";
+import BoothCrawler from "@/Crawlers/BoothCrawler";
+import BoothItem from "@/models/BoothItem";
 
 export default Vue.extend({
   data: () => ({
+    valid: false,
+    rule: [(v: any) => !!v || "この項目は必須です"],
     name: "アイテムを追加（URL）",
     dialog: false,
+    url: "",
+    overray: false,
   }),
+  methods: {
+    async scraping(url: string) {
+      this.overray = true;
+
+      try {
+        const crw = await BoothCrawler.init(url);
+
+        if (crw === undefined || crw.scrapedBooothItem === null) {
+          throw new Error("商品の取得に失敗");
+        }
+        crw.showItems();
+        const newItem = new BoothItem(crw.scrapedBooothItem);
+        this.$store.dispatch("addItem", newItem);
+
+        this.dialog = false; // ダイアログを消す
+      } catch (e) {
+        console.log(e);
+        console.log("商品の取得に失敗");
+      } finally {
+        this.overray = false;
+      }
+    },
+    // downloadImage(url: string) {
+    //   const request = require("request");
+    //   const fs = require("fs");
+
+    //   request({ method: "GET", url: url, encoding: null }, function(
+    //     error: any,
+    //     response: any,
+    //     body: any
+    //   ) {
+    //     if (!error && response.statusCode === 200) {
+    //       fs.writeFileSync("E:/Document/a.png", body, "binary");
+    //       console.log("aaa");
+    //     }
+    //   });
+    // },
+  },
 });
 </script>

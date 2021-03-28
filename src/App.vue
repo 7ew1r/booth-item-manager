@@ -104,8 +104,8 @@ export default Vue.extend({
     itemSortedById: function() {
       return Array.from(this.$store.state.items as Array<BoothItem>).sort(
         (a: BoothItem, b: BoothItem) => {
-          if (a.id < b.id) return -1;
-          if (a.id > b.id) return 1;
+          if (a.created_at < b.created_at) return -1;
+          if (a.created_at > b.created_at) return 1;
           return 0;
         }
       );

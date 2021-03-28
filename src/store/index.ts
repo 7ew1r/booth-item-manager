@@ -22,12 +22,32 @@ export interface Actions {
 
 export const state: State = {
   items: [
-    new BoothItem(1, 954376, "オリジナル3Dモデル『キッシュ』", [
-      "3Dモデル",
-      "VRChat",
-    ]),
-    new BoothItem(2, 2495796, "オリジナル3Dモデル『レイニィ』ver.1.02", []),
-    new BoothItem(3, 2645754, "オリジナル3Dモデル 　「ぷれっつぇる」", []),
+    new BoothItem({
+      number: "954376",
+      url: "https://booth.pm/ja/items/2848199",
+      title: "オリジナル3Dモデル『キッシュ』",
+      shopName: "",
+      shopUrl: "",
+      description: "",
+      modules: [],
+      tags: ["3Dモデル", "VRChat"],
+    }),
+    new BoothItem({
+      number: "2495796",
+      url: "https://booth.pm/ja/items/2495796",
+      title: "オリジナル3Dモデル『レイニィ』ver.1.02",
+      shopName: "",
+      shopUrl: "",
+      description: "",
+      modules: [],
+      tags: [],
+    }),
+    // new BoothItem(1, 954376, "オリジナル3Dモデル『キッシュ』", [
+    //   "3Dモデル",
+    //   "VRChat",
+    // ]),
+    // new BoothItem(2, 2495796, "オリジナル3Dモデル『レイニィ』ver.1.02", []),
+    // new BoothItem(3, 2645754, "オリジナル3Dモデル 「ぷれっつぇる」", []),
   ],
 };
 

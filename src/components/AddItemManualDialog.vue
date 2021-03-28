@@ -82,11 +82,21 @@ export default Vue.extend({
       // };
 
       let newItem = new BoothItem(
-        999,
-        //null,
-        parseInt(this.itemNumber),
-        this.name,
-        this.tags
+        {
+          number: this.itemNumber,
+          url: this.url,
+          title: this.name,
+          shopName: "",
+          shopUrl: "",
+          description: "",
+          modules: [],
+          tags: [],
+        }
+        // 999,
+        // //null,
+        // parseInt(this.itemNumber),
+        // this.name,
+        // this.tags
       );
 
       this.$store.dispatch("addItem", newItem);

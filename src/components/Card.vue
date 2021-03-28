@@ -10,7 +10,7 @@
 
     <v-img height="300" width="300" :src="item.imageFile"></v-img>
 
-    <v-card-title>{{ item.name }}</v-card-title>
+    <v-card-title>{{ item.title }}</v-card-title>
 
     <v-card-text>
       <v-chip-group
