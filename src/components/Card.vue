@@ -23,9 +23,7 @@
     </v-card-text>
 
     <v-card-actions>
-      <v-btn color="deep-purple lighten-2" text @click="reserve">
-        編集
-      </v-btn>
+      <EditItemDialog :item="item" />
       <v-spacer></v-spacer>
       <v-btn icon @click="openExploer"><v-icon>mdi-folder-open</v-icon></v-btn>
       <v-btn icon @click="openWebBrowser"
@@ -45,8 +43,12 @@ export interface Item {
 
 import Vue from "vue";
 import BoothItem from "../models/BoothItem";
+import EditItemDialog from "@/components/EditItemDialog.vue";
 
 export default Vue.extend({
+  components: {
+    EditItemDialog,
+  },
   data: () => ({
     loading: false,
     selection: 1,
